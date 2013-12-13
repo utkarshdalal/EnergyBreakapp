@@ -25,13 +25,13 @@
     double currentCoalPercentage, currentOilPercentage, currentGasPercentage, currentNuclearPercentage, currentHydroPercentage, currentRenewablePercentage, currentOtherFossilPercentage, currentGeothermalPercentage, currentWindPercentage, currentSolarPercentage, currentBiomassPercentage, currentOptOutPercentage, currentTotalPercentage;
     double totalCoalPercentage, totalOilPercentage, totalGasPercentage, totalNuclearPercentage, totalHydroPercentage, totalRenewablePercentage, totalOtherFossilPercentage, totalGeothermalPercentage, totalWindPercentage, totalSolarPercentage, totalBiomassPercentage, totalOptOutPercentage, totalPercentage;
 }
-@property (weak, nonatomic) IBOutlet UITextView *LocationText;
+/*@property (weak, nonatomic) IBOutlet UITextView *LocationText;
 @property (weak, nonatomic) IBOutlet UITextView *CoalText;
 @property (weak, nonatomic) IBOutlet UITextView *OilText;
 @property (weak, nonatomic) IBOutlet UITextView *GasText;
 @property (weak, nonatomic) IBOutlet UITextView *NuclearText;
 @property (weak, nonatomic) IBOutlet UITextView *HydroText;
-@property (weak, nonatomic) IBOutlet UITextView *RenewableText;
+@property (weak, nonatomic) IBOutlet UITextView *RenewableText;*/
 @property NSDate *startDate;
 @property NSDate *endDate;
 @property float startChargePercentage;
