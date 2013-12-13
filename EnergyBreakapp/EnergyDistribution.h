@@ -1,0 +1,22 @@
+//
+//  EnergyDistribution.h
+//  EnergyBreakapp
+//
+//  Created by Class Account on 10/31/13.
+//  Copyright (c) 2013 UC Berkeley. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface EnergyDistribution : NSObject
+{
+    int zipCode;
+}
+
+@property double coalPercentage, oilPercentage, gasPercentage, nuclearPercentage, hydroPercentage, renewablePercentage, otherFossilPercentage, biomassPercentage, windPercentage, solarPercentage, geothermalPercentage, optOutPercentage;
+
+-(id) initWithZipCode:(int) currentZipCode;
+-(id) initOptOutMode;
+-(double) totalPercentages;
+
+@end

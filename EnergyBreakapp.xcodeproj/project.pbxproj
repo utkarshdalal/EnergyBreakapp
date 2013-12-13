@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56B1ED8B185A7F2500CB562D /* BatteryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B1ED8A185A7F2500CB562D /* BatteryView.m */; };
+		AC11D7C81807CBE9005ACA4C /* EnergyBreakapp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACB4312F1807B16E00768B27 /* EnergyBreakapp-Info.plist */; };
 		ACB431281807B16E00768B27 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB431271807B16E00768B27 /* UIKit.framework */; };
 		ACB4312A1807B16E00768B27 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB431291807B16E00768B27 /* Foundation.framework */; };
 		ACB4312C1807B16E00768B27 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB4312B1807B16E00768B27 /* CoreGraphics.framework */; };
-		ACB431321807B16E00768B27 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACB431301807B16E00768B27 /* InfoPlist.strings */; };
 		ACB431341807B16E00768B27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB431331807B16E00768B27 /* main.m */; };
 		ACB431381807B16E00768B27 /* EnergyBreakappAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB431371807B16E00768B27 /* EnergyBreakappAppDelegate.m */; };
 		ACB4313A1807B16E00768B27 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = ACB431391807B16E00768B27 /* Default.png */; };
@@ -24,6 +25,8 @@
 		ACB431511807B16E00768B27 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB431291807B16E00768B27 /* Foundation.framework */; };
 		ACB431591807B16E00768B27 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACB431571807B16E00768B27 /* InfoPlist.strings */; };
 		ACB4315C1807B16F00768B27 /* EnergyBreakappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB4315B1807B16F00768B27 /* EnergyBreakappTests.m */; };
+		ACB431681807B3FC00768B27 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB431671807B3FC00768B27 /* CoreLocation.framework */; };
+		ACDDC39118235BCD00A2FF20 /* EnergyDistribution.m in Sources */ = {isa = PBXBuildFile; fileRef = ACDDC39018235BCD00A2FF20 /* EnergyDistribution.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		56B1ED89185A7F2500CB562D /* BatteryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BatteryView.h; path = ../BatteryView.h; sourceTree = "<group>"; };
+		56B1ED8A185A7F2500CB562D /* BatteryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BatteryView.m; path = ../BatteryView.m; sourceTree = "<group>"; };
 		ACB431241807B16E00768B27 /* EnergyBreakapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnergyBreakapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACB431271807B16E00768B27 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		ACB431291807B16E00768B27 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -60,6 +65,10 @@
 		ACB431581807B16E00768B27 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ACB4315A1807B16F00768B27 /* EnergyBreakappTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnergyBreakappTests.h; sourceTree = "<group>"; };
 		ACB4315B1807B16F00768B27 /* EnergyBreakappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnergyBreakappTests.m; sourceTree = "<group>"; };
+		ACB431651807B3F500768B27 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		ACB431671807B3FC00768B27 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		ACDDC38F18235BCD00A2FF20 /* EnergyDistribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnergyDistribution.h; sourceTree = "<group>"; };
+		ACDDC39018235BCD00A2FF20 /* EnergyDistribution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnergyDistribution.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACB431681807B3FC00768B27 /* CoreLocation.framework in Frameworks */,
 				ACB431281807B16E00768B27 /* UIKit.framework in Frameworks */,
 				ACB4312A1807B16E00768B27 /* Foundation.framework in Frameworks */,
 				ACB4312C1807B16E00768B27 /* CoreGraphics.framework in Frameworks */,
@@ -89,6 +99,8 @@
 		ACB4311B1807B16E00768B27 = {
 			isa = PBXGroup;
 			children = (
+				ACB431671807B3FC00768B27 /* CoreLocation.framework */,
+				ACB431651807B3F500768B27 /* MapKit.framework */,
 				ACB4312D1807B16E00768B27 /* EnergyBreakapp */,
 				ACB431541807B16E00768B27 /* EnergyBreakappTests */,
 				ACB431261807B16E00768B27 /* Frameworks */,
@@ -126,6 +138,10 @@
 				ACB431451807B16E00768B27 /* EnergyBreakappViewController.h */,
 				ACB431461807B16E00768B27 /* EnergyBreakappViewController.m */,
 				ACB4312E1807B16E00768B27 /* Supporting Files */,
+				ACDDC38F18235BCD00A2FF20 /* EnergyDistribution.h */,
+				ACDDC39018235BCD00A2FF20 /* EnergyDistribution.m */,
+				56B1ED89185A7F2500CB562D /* BatteryView.h */,
+				56B1ED8A185A7F2500CB562D /* BatteryView.m */,
 			);
 			path = EnergyBreakapp;
 			sourceTree = "<group>";
@@ -235,7 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACB431321807B16E00768B27 /* InfoPlist.strings in Resources */,
+				AC11D7C81807CBE9005ACA4C /* EnergyBreakapp-Info.plist in Resources */,
 				ACB4313A1807B16E00768B27 /* Default.png in Resources */,
 				ACB4313C1807B16E00768B27 /* Default@2x.png in Resources */,
 				ACB4313E1807B16E00768B27 /* Default-568h@2x.png in Resources */,
@@ -275,9 +291,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56B1ED8B185A7F2500CB562D /* BatteryView.m in Sources */,
 				ACB431341807B16E00768B27 /* main.m in Sources */,
 				ACB431381807B16E00768B27 /* EnergyBreakappAppDelegate.m in Sources */,
 				ACB431471807B16E00768B27 /* EnergyBreakappViewController.m in Sources */,
+				ACDDC39118235BCD00A2FF20 /* EnergyDistribution.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +414,7 @@
 		ACB431601807B16F00768B27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EnergyBreakapp/EnergyBreakapp-Prefix.pch";
 				INFOPLIST_FILE = "EnergyBreakapp/EnergyBreakapp-Info.plist";
@@ -407,6 +426,7 @@
 		ACB431611807B16F00768B27 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EnergyBreakapp/EnergyBreakapp-Prefix.pch";
 				INFOPLIST_FILE = "EnergyBreakapp/EnergyBreakapp-Info.plist";
@@ -468,6 +488,7 @@
 				ACB431611807B16F00768B27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ACB431621807B16F00768B27 /* Build configuration list for PBXNativeTarget "EnergyBreakappTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +497,7 @@
 				ACB431641807B16F00768B27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

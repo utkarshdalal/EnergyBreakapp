@@ -1,18 +1,215 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2519" systemVersion="12A206j" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A2093" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1856"/>
+        <deployment defaultVersion="1552" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
+        <!--Energy Breakapp View Controller-->
         <scene sceneID="5">
             <objects>
                 <viewController id="2" customClass="EnergyBreakappViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZIC-Zr-5i1"/>
+                        <viewControllerLayoutGuide type="bottom" id="bc7-gK-Ley"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mau-Zu-miI">
+                                <rect key="frame" x="81" y="313" width="157" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="157" id="pzP-wz-wtZ"/>
+                                </constraints>
+                                <state key="normal" title="Update Location">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="updateLocation:" destination="2" eventType="touchUpInside" id="cXv-pB-CLI"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Location will be displayed here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZKR-G7-4aI">
+                                <rect key="frame" x="40" y="272" width="240" height="33"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="MT9-ug-Eph"/>
+                                    <constraint firstAttribute="height" constant="33" id="aoI-5X-y23"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pjs-86-5sv" userLabel="CoalText">
+                                <rect key="frame" x="159" y="20" width="141" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="141" id="nBU-VX-jme"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Coal Percentage:" translatesAutoresizingMaskIntoConstraints="NO" id="Wu2-NL-czT">
+                                <rect key="frame" x="20" y="20" width="125" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="9Ss-xu-ZPK"/>
+                                    <constraint firstAttribute="width" constant="125" id="CYX-py-tgl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oMZ-SB-XgY" userLabel="OilText">
+                                <rect key="frame" x="159" y="62" width="141" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Oil Percentage:" translatesAutoresizingMaskIntoConstraints="NO" id="YFS-Lz-Tjc">
+                                <rect key="frame" x="20" y="62" width="125" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="GET-fm-gSU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lrN-h7-cnZ" userLabel="GasText">
+                                <rect key="frame" x="159" y="104" width="141" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Gas Percentage:" translatesAutoresizingMaskIntoConstraints="NO" id="hzv-Mn-ISX">
+                                <rect key="frame" x="20" y="104" width="125" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="rhP-qw-alC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A11-Uh-jTa" userLabel="NuclearText">
+                                <rect key="frame" x="159" y="146" width="141" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Nuclear Percentage:" translatesAutoresizingMaskIntoConstraints="NO" id="dA5-Xd-Inx">
+                                <rect key="frame" x="20" y="146" width="144" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="Mql-DS-U1I"/>
+                                    <constraint firstAttribute="width" constant="144" id="ren-gQ-GGc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8EK-pk-yZA" userLabel="HydroText">
+                                <rect key="frame" x="159" y="188" width="141" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Hydro Percentage:" translatesAutoresizingMaskIntoConstraints="NO" id="88Z-Ds-O9f">
+                                <rect key="frame" x="20" y="188" width="137" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="4my-Tz-5WO"/>
+                                    <constraint firstAttribute="width" constant="137" id="f38-e6-k2j"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCZ-eF-fFo" userLabel="RenewableText">
+                                <rect key="frame" x="182" y="230" width="118" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="118" id="6hb-cD-aUL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Renewable Percentage:" translatesAutoresizingMaskIntoConstraints="NO" id="0ab-lK-3Qc">
+                                <rect key="frame" x="20" y="230" width="167" height="34"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="W51-De-V3S"/>
+                                    <constraint firstAttribute="width" constant="167" id="XGo-Mm-4V8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMw-Er-fxJ">
+                                <rect key="frame" x="132" y="351" width="54" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Opt out">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="OptOut:" destination="2" eventType="touchUpInside" id="uVg-cx-9wS"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSr-DN-mSp" customClass="BatteryView">
+                                <rect key="frame" x="79" y="389" width="160" height="79"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mau-Zu-miI" firstAttribute="top" secondItem="ZKR-G7-4aI" secondAttribute="bottom" constant="8" symbolic="YES" id="19j-xq-u5R"/>
+                            <constraint firstAttribute="trailing" secondItem="8EK-pk-yZA" secondAttribute="trailing" constant="20" symbolic="YES" id="1ek-3j-pMN"/>
+                            <constraint firstItem="Pjs-86-5sv" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" id="4eg-Zm-DYs"/>
+                            <constraint firstItem="lrN-h7-cnZ" firstAttribute="top" secondItem="oMZ-SB-XgY" secondAttribute="bottom" constant="8" symbolic="YES" id="9NC-eA-wwh"/>
+                            <constraint firstItem="YFS-Lz-Tjc" firstAttribute="top" secondItem="Wu2-NL-czT" secondAttribute="bottom" constant="8" symbolic="YES" id="9fl-0H-ied"/>
+                            <constraint firstItem="Mau-Zu-miI" firstAttribute="centerX" secondItem="ZKR-G7-4aI" secondAttribute="centerX" id="CeY-rO-sYx"/>
+                            <constraint firstItem="A11-Uh-jTa" firstAttribute="leading" secondItem="lrN-h7-cnZ" secondAttribute="leading" id="DPr-Li-E6z"/>
+                            <constraint firstAttribute="trailing" secondItem="A11-Uh-jTa" secondAttribute="trailing" constant="20" symbolic="YES" id="E3f-ZN-S6F"/>
+                            <constraint firstItem="8EK-pk-yZA" firstAttribute="top" secondItem="dA5-Xd-Inx" secondAttribute="bottom" constant="8" symbolic="YES" id="IE1-lM-f8S"/>
+                            <constraint firstItem="YFS-Lz-Tjc" firstAttribute="trailing" secondItem="Wu2-NL-czT" secondAttribute="trailing" id="IQ6-kZ-czZ"/>
+                            <constraint firstAttribute="trailing" secondItem="Pjs-86-5sv" secondAttribute="trailing" constant="20" symbolic="YES" id="Iga-T5-EEb"/>
+                            <constraint firstItem="hzv-Mn-ISX" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="KGm-ps-Ubr"/>
+                            <constraint firstItem="8EK-pk-yZA" firstAttribute="top" secondItem="A11-Uh-jTa" secondAttribute="bottom" constant="8" symbolic="YES" id="Kmb-dD-6HG"/>
+                            <constraint firstItem="ZKR-G7-4aI" firstAttribute="top" secondItem="qCZ-eF-fFo" secondAttribute="bottom" constant="8" symbolic="YES" id="Oes-ej-JGT"/>
+                            <constraint firstItem="qCZ-eF-fFo" firstAttribute="top" secondItem="8EK-pk-yZA" secondAttribute="bottom" constant="8" symbolic="YES" id="Pz7-Jg-7V5"/>
+                            <constraint firstItem="88Z-Ds-O9f" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="QEc-ro-XsV"/>
+                            <constraint firstItem="ZKR-G7-4aI" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" id="QP4-rT-oIr"/>
+                            <constraint firstAttribute="trailing" secondItem="lrN-h7-cnZ" secondAttribute="trailing" constant="20" symbolic="YES" id="V1L-gy-fPq"/>
+                            <constraint firstAttribute="trailing" secondItem="oMZ-SB-XgY" secondAttribute="trailing" constant="20" symbolic="YES" id="Vta-M6-05r"/>
+                            <constraint firstItem="8EK-pk-yZA" firstAttribute="leading" secondItem="A11-Uh-jTa" secondAttribute="leading" id="XJg-k8-htk"/>
+                            <constraint firstItem="YFS-Lz-Tjc" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="YKS-UY-f8S"/>
+                            <constraint firstItem="dA5-Xd-Inx" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="aVI-h7-PQ5"/>
+                            <constraint firstItem="dA5-Xd-Inx" firstAttribute="top" secondItem="hzv-Mn-ISX" secondAttribute="bottom" constant="8" symbolic="YES" id="bNE-ff-eaG"/>
+                            <constraint firstItem="oMZ-SB-XgY" firstAttribute="leading" secondItem="Pjs-86-5sv" secondAttribute="leading" id="cxz-Cv-hr4"/>
+                            <constraint firstItem="88Z-Ds-O9f" firstAttribute="top" secondItem="dA5-Xd-Inx" secondAttribute="bottom" constant="8" symbolic="YES" id="d0U-VO-kwP"/>
+                            <constraint firstItem="dA5-Xd-Inx" firstAttribute="top" secondItem="lrN-h7-cnZ" secondAttribute="bottom" constant="8" symbolic="YES" id="fyk-XO-6Ug"/>
+                            <constraint firstItem="Wu2-NL-czT" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="fzx-Wc-bs9"/>
+                            <constraint firstItem="A11-Uh-jTa" firstAttribute="top" secondItem="lrN-h7-cnZ" secondAttribute="bottom" constant="8" symbolic="YES" id="nzC-MN-lml"/>
+                            <constraint firstItem="oMZ-SB-XgY" firstAttribute="top" secondItem="YFS-Lz-Tjc" secondAttribute="top" id="qXe-GN-Sel"/>
+                            <constraint firstItem="hzv-Mn-ISX" firstAttribute="top" secondItem="YFS-Lz-Tjc" secondAttribute="bottom" constant="8" symbolic="YES" id="qhn-7b-yyV"/>
+                            <constraint firstItem="oMZ-SB-XgY" firstAttribute="top" secondItem="Pjs-86-5sv" secondAttribute="bottom" constant="8" symbolic="YES" id="rRe-EY-rU5"/>
+                            <constraint firstItem="hzv-Mn-ISX" firstAttribute="trailing" secondItem="YFS-Lz-Tjc" secondAttribute="trailing" id="rVT-Sx-gLR"/>
+                            <constraint firstItem="lrN-h7-cnZ" firstAttribute="leading" secondItem="oMZ-SB-XgY" secondAttribute="leading" id="rtZ-Nu-0LK"/>
+                            <constraint firstItem="lrN-h7-cnZ" firstAttribute="top" secondItem="hzv-Mn-ISX" secondAttribute="top" id="t3H-3y-f5P"/>
+                            <constraint firstItem="ZKR-G7-4aI" firstAttribute="top" secondItem="0ab-lK-3Qc" secondAttribute="bottom" constant="8" symbolic="YES" id="uIE-OZ-ScK"/>
+                            <constraint firstAttribute="trailing" secondItem="qCZ-eF-fFo" secondAttribute="trailing" constant="20" symbolic="YES" id="x35-qL-dSm"/>
+                            <constraint firstItem="0ab-lK-3Qc" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="xv2-wM-J3Z"/>
+                            <constraint firstItem="0ab-lK-3Qc" firstAttribute="top" secondItem="8EK-pk-yZA" secondAttribute="bottom" constant="8" symbolic="YES" id="yTB-6O-dsC"/>
+                            <constraint firstItem="Wu2-NL-czT" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" id="yfF-kK-3yz"/>
+                            <constraint firstItem="0ab-lK-3Qc" firstAttribute="top" secondItem="88Z-Ds-O9f" secondAttribute="bottom" constant="8" symbolic="YES" id="zc9-gf-F3U"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="CoalText" destination="Pjs-86-5sv" id="Tjt-Cr-JzK"/>
+                        <outlet property="GasText" destination="lrN-h7-cnZ" id="48E-2e-qSt"/>
+                        <outlet property="HydroText" destination="8EK-pk-yZA" id="9wa-u2-Lus"/>
+                        <outlet property="LocationText" destination="ZKR-G7-4aI" id="oDA-Qa-EPM"/>
+                        <outlet property="NuclearText" destination="A11-Uh-jTa" id="ahe-Fs-6XS"/>
+                        <outlet property="OilText" destination="oMZ-SB-XgY" id="1gW-6b-hew"/>
+                        <outlet property="RenewableText" destination="qCZ-eF-fFo" id="rKR-KC-Owv"/>
+                        <outlet property="batteryView" destination="hSr-DN-mSp" id="JNZ-66-NIo"/>
+                        <outlet property="optOutButton" destination="aMw-Er-fxJ" id="fLX-dd-cD1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
