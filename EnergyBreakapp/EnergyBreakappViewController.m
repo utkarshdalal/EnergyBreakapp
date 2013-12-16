@@ -179,6 +179,7 @@
 
 - (IBAction)OptOut:(id)sender {
     if (optOut) {
+        [locationManager startUpdatingLocation];
         optOut = NO;
         NSLog(@"Opt in button pressed");
         [(UIButton *)sender setTitle:@"Opt out" forState:UIControlStateNormal];
