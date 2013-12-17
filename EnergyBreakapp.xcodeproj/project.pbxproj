@@ -44,6 +44,7 @@
 /* Begin PBXFileReference section */
 		566D0951185E8A3A00D1CDB0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		566D0954185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EnergyBreakapp.xcdatamodel; sourceTree = "<group>"; };
+		566D097C1860166C00D1CDB0 /* EnergyBreakapp2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = EnergyBreakapp2.xcdatamodel; sourceTree = "<group>"; };
 		56B1ED89185A7F2500CB562D /* BatteryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BatteryView.h; path = ../BatteryView.h; sourceTree = "<group>"; };
 		56B1ED8A185A7F2500CB562D /* BatteryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BatteryView.m; path = ../BatteryView.m; sourceTree = "<group>"; };
 		ACB431241807B16E00768B27 /* EnergyBreakapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnergyBreakapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,7 +105,6 @@
 		ACB4311B1807B16E00768B27 = {
 			isa = PBXGroup;
 			children = (
-				566D0953185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodeld */,
 				ACB431671807B3FC00768B27 /* CoreLocation.framework */,
 				ACB431651807B3F500768B27 /* MapKit.framework */,
 				ACB4312D1807B16E00768B27 /* EnergyBreakapp */,
@@ -138,6 +138,7 @@
 		ACB4312D1807B16E00768B27 /* EnergyBreakapp */ = {
 			isa = PBXGroup;
 			children = (
+				566D0953185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodeld */,
 				ACB431361807B16E00768B27 /* EnergyBreakappAppDelegate.h */,
 				ACB431371807B16E00768B27 /* EnergyBreakappAppDelegate.m */,
 				ACB4313F1807B16E00768B27 /* MainStoryboard_iPhone.storyboard */,
@@ -513,11 +514,12 @@
 		566D0953185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				566D097C1860166C00D1CDB0 /* EnergyBreakapp2.xcdatamodel */,
 				566D0954185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodel */,
 			);
 			currentVersion = 566D0954185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodel */;
 			path = EnergyBreakapp.xcdatamodeld;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */

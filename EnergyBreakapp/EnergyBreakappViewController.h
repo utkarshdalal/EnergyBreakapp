@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import <CoreLocation/CoreLocation.h>
+#import "EnergyBreakappAppDelegate.h"
 #import "EnergyDataGetter.h"
 #import "EnergyDistribution.h"
 #import "BatteryView.h"
@@ -32,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *NuclearText;
 @property (weak, nonatomic) IBOutlet UITextView *HydroText;
 @property (weak, nonatomic) IBOutlet UITextView *RenewableText;*/
+@property NSManagedObject *currentDistribution;
 @property NSDate *startDate;
 @property NSDate *endDate;
 @property float startChargePercentage;
@@ -42,5 +44,8 @@
 - (IBAction)OptOut:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *optOutButton;
 @property (strong, nonatomic) IBOutlet BatteryView *batteryView;
+@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+@property (weak, nonatomic) IBOutlet UITextView *locationText;
+@property (weak, nonatomic) IBOutlet UITextView *dateText;
 
 @end
