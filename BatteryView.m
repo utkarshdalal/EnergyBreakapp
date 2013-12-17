@@ -162,6 +162,13 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
     UIColor * darkBiomassColor = [UIColor colorWithRed:0.1 green:0.5 blue:0.0 alpha:1.0];
     UIColor * lightBiomassColor = [UIColor colorWithRed:0.2 green:0.8 blue:0.0 alpha:1.0];
     drawLinearGradient(context, biomassRectangle, lightBiomassColor.CGColor, darkBiomassColor.CGColor);
+    
+    CGRect optOutRectangle = CGRectMake(currentPosition, top, currentOptOutPercentage*width, height);
+    currentPosition += currentOptOutPercentage*width;
+    CGContextAddRect(context, optOutRectangle);
+    UIColor * darkOptOutColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.0];
+    UIColor * lightOptOutColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    drawLinearGradient(context, optOutRectangle, lightOptOutColor.CGColor, darkOptOutColor.CGColor);
 }
 
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		566D0952185E8A3A00D1CDB0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566D0951185E8A3A00D1CDB0 /* CoreData.framework */; };
+		566D0955185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 566D0953185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodeld */; };
 		56B1ED8B185A7F2500CB562D /* BatteryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B1ED8A185A7F2500CB562D /* BatteryView.m */; };
 		AC11D7C81807CBE9005ACA4C /* EnergyBreakapp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACB4312F1807B16E00768B27 /* EnergyBreakapp-Info.plist */; };
 		ACB431281807B16E00768B27 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB431271807B16E00768B27 /* UIKit.framework */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		566D0951185E8A3A00D1CDB0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		566D0954185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EnergyBreakapp.xcdatamodel; sourceTree = "<group>"; };
 		56B1ED89185A7F2500CB562D /* BatteryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BatteryView.h; path = ../BatteryView.h; sourceTree = "<group>"; };
 		56B1ED8A185A7F2500CB562D /* BatteryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BatteryView.m; path = ../BatteryView.m; sourceTree = "<group>"; };
 		ACB431241807B16E00768B27 /* EnergyBreakapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnergyBreakapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				566D0952185E8A3A00D1CDB0 /* CoreData.framework in Frameworks */,
 				ACB431681807B3FC00768B27 /* CoreLocation.framework in Frameworks */,
 				ACB431281807B16E00768B27 /* UIKit.framework in Frameworks */,
 				ACB4312A1807B16E00768B27 /* Foundation.framework in Frameworks */,
@@ -99,6 +104,7 @@
 		ACB4311B1807B16E00768B27 = {
 			isa = PBXGroup;
 			children = (
+				566D0953185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodeld */,
 				ACB431671807B3FC00768B27 /* CoreLocation.framework */,
 				ACB431651807B3F500768B27 /* MapKit.framework */,
 				ACB4312D1807B16E00768B27 /* EnergyBreakapp */,
@@ -120,6 +126,7 @@
 		ACB431261807B16E00768B27 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				566D0951185E8A3A00D1CDB0 /* CoreData.framework */,
 				ACB431271807B16E00768B27 /* UIKit.framework */,
 				ACB431291807B16E00768B27 /* Foundation.framework */,
 				ACB4312B1807B16E00768B27 /* CoreGraphics.framework */,
@@ -296,6 +303,7 @@
 				ACB431381807B16E00768B27 /* EnergyBreakappAppDelegate.m in Sources */,
 				ACB431471807B16E00768B27 /* EnergyBreakappViewController.m in Sources */,
 				ACDDC39118235BCD00A2FF20 /* EnergyDistribution.m in Sources */,
+				566D0955185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +508,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		566D0953185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				566D0954185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodel */,
+			);
+			currentVersion = 566D0954185E8ADC00D1CDB0 /* EnergyBreakapp.xcdatamodel */;
+			path = EnergyBreakapp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = ACB4311C1807B16E00768B27 /* Project object */;
 }

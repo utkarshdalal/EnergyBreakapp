@@ -146,7 +146,12 @@
 
 - (IBAction)updateLocation:(id)sender{
     NSLog(@"Update Location button pressed");
-    if (isCharging)
+    if (optOut)
+    {
+        distribution = [[EnergyDistribution alloc] initOptOutMode];
+        [self setPercentages];
+    }
+    else if (isCharging)
     {
         NSLog(@"Device is charging");
         locationManager.delegate = self;
@@ -174,11 +179,14 @@
 
 - (IBAction)OptOut:(id)sender {
     if (optOut) {
+        [locationManager startUpdatingLocation];
         optOut = NO;
         NSLog(@"Opt in button pressed");
         [(UIButton *)sender setTitle:@"Opt out" forState:UIControlStateNormal];
     }
     else{
+        distribution = [[EnergyDistribution alloc] initOptOutMode];
+        [self setPercentages];
         optOut = YES;
         NSLog(@"Opt out button pressed");
         [(UIButton *)sender setTitle:@"Opt in" forState:UIControlStateNormal];
@@ -201,7 +209,7 @@
     
     if (currentLocation != nil)
     {
-        _LocationText.text = [NSString stringWithFormat: @"Longitude: %.8f Latitude: %.8f", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude];
+        //_LocationText.text = [NSString stringWithFormat: @"Longitude: %.8f Latitude: %.8f", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude];
     }
     
     [locationManager stopUpdatingLocation];
@@ -210,15 +218,15 @@
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
         if (error == nil && [placemarks count] > 0){
             placemark = [placemarks lastObject];
-            _LocationText.text = [placemark postalCode];
+            //_LocationText.text = [placemark postalCode];
             distribution = [[EnergyDistribution alloc] initWithZipCode:[[placemark postalCode] intValue]];
             [self setPercentages];
-            _CoalText.text = [NSString stringWithFormat:@"%g", [distribution coalPercentage]];
+            /*_CoalText.text = [NSString stringWithFormat:@"%g", [distribution coalPercentage]];
             _OilText.text = [NSString stringWithFormat:@"%g", [distribution oilPercentage]];
             _GasText.text = [NSString stringWithFormat:@"%g", [distribution gasPercentage]];
             _NuclearText.text = [NSString stringWithFormat:@"%g", [distribution nuclearPercentage]];
             _HydroText.text = [NSString stringWithFormat:@"%g", [distribution hydroPercentage]];
-            _RenewableText.text = [NSString stringWithFormat:@"%g", [distribution renewablePercentage]];
+            _RenewableText.text = [NSString stringWithFormat:@"%g", [distribution renewablePercentage]];*/
         }        
         else{
             NSLog(@"Error!");
