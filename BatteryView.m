@@ -42,22 +42,26 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGFloat top = self.bounds.origin.y;
-    CGFloat bottom = top + self.bounds.size.height;
-    CGFloat left = self.bounds.origin.x;
-    CGFloat right = left + self.bounds.size.width;
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 5.0);
-    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-    CGRect batteryRectangle = CGRectMake(left, top, self.bounds.size.width, self.bounds.size.height);
-    CGContextAddRect(context, batteryRectangle);
-    CGContextStrokePath(context);
-    
     if (hasDistribution) {
         [self fillBattery];
     }
+}
+
+- (void)drawBattery
+{
+    CGFloat top = self.bounds.origin.y;
+    CGFloat left = self.bounds.origin.x;
+    CGFloat right = left + self.bounds.size.width;
+    CGFloat bottom = top + self.bounds.size.height;
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(context, 2.5);
+    CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+    CGRect batteryRectangle = CGRectMake(left + 1.25, top + 1.25, self.bounds.size.width - 12.5, self.bounds.size.height - 2.5);
+    CGRect batteryTopRectangle = CGRectMake(right - 11.25, self.bounds.size.height/2 - 10, 7.5, 20);
+    CGContextAddRect(context, batteryRectangle);
+    CGContextAddRect(context, batteryTopRectangle);
+    CGContextStrokePath(context);
 }
 
 /* The following code taken from http://www.raywenderlich.com/32283/core-graphics-tutorial-lines-rectangles-and-gradients */
@@ -85,41 +89,119 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
 
 -(void) fillBattery
 {
-    CGFloat top = self.bounds.origin.y;
-    CGFloat currentPosition = self.bounds.origin.x;
-    CGFloat width = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    [self drawBattery];
+    CGFloat top = self.bounds.origin.y + 5;
+    CGFloat currentPosition = self.bounds.origin.x + 5;
+    CGFloat width = self.bounds.size.width - 20;
+    CGFloat height = self.bounds.size.height - 10;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 1.0);
     CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
     
+    //Uncomment the following code to have flat battery
+    /*
+    CGRect coalRectangle = CGRectMake(currentPosition, top, currentCoalPercentage*width, height);
+    currentPosition += currentCoalPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor darkGrayColor].CGColor);
+    CGContextAddRect(context, coalRectangle);
+    CGContextFillRect(context, coalRectangle);
+    
+    CGRect oilRectangle = CGRectMake(currentPosition, top, currentOilPercentage*width, height);
+    currentPosition += currentOilPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);
+    CGContextAddRect(context, oilRectangle);
+    CGContextFillRect(context, oilRectangle);
+    
+    CGRect gasRectangle = CGRectMake(currentPosition, top, currentGasPercentage*width, height);
+    currentPosition += currentGasPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor redColor].CGColor);
+    CGContextAddRect(context, gasRectangle);
+    CGContextFillRect(context, gasRectangle);
+    
+    CGRect nuclearRectangle = CGRectMake(currentPosition, top, currentNuclearPercentage*width, height);
+    currentPosition += currentNuclearPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor lightGrayColor].CGColor);
+    CGContextAddRect(context, nuclearRectangle);
+    CGContextFillRect(context, nuclearRectangle);
+    
+    CGRect otherFossilRectangle = CGRectMake(currentPosition, top, currentOtherFossilPercentage*width, height);
+    currentPosition += currentOtherFossilPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor purpleColor].CGColor);
+    CGContextAddRect(context, otherFossilRectangle);
+    CGContextFillRect(context, otherFossilRectangle);
+    
+    CGRect hydroRectangle = CGRectMake(currentPosition, top, currentHydroPercentage*width, height);
+    currentPosition += currentHydroPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor blueColor].CGColor);
+    CGContextAddRect(context, hydroRectangle);
+    CGContextFillRect(context, hydroRectangle);
+    
+    CGRect geothermalRectangle = CGRectMake(currentPosition, top, currentGeothermalPercentage*width, height);
+    currentPosition += currentGeothermalPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor brownColor].CGColor);
+    CGContextAddRect(context, geothermalRectangle);
+    CGContextFillRect(context, geothermalRectangle);
+    
+    CGRect windRectangle = CGRectMake(currentPosition, top, currentWindPercentage*width, height);
+    currentPosition += currentWindPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor cyanColor].CGColor);
+    CGContextAddRect(context, windRectangle);
+    CGContextFillRect(context, windRectangle);
+    
+    CGRect solarRectangle = CGRectMake(currentPosition, top, currentSolarPercentage*width, height);
+    currentPosition += currentSolarPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor yellowColor].CGColor);
+    CGContextAddRect(context, solarRectangle);
+    CGContextFillRect(context, solarRectangle);
+    
+    CGRect biomassRectangle = CGRectMake(currentPosition, top, currentBiomassPercentage*width, height);
+    currentPosition += currentBiomassPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor greenColor].CGColor);
+    CGContextAddRect(context, biomassRectangle);
+    CGContextFillRect(context, biomassRectangle);
+    
+    CGRect optOutRectangle = CGRectMake(currentPosition, top, currentOptOutPercentage*width, height);
+    currentPosition += currentOptOutPercentage*width;
+    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextAddRect(context, optOutRectangle);
+    CGContextFillRect(context, optOutRectangle);*/
+    
+    //Uncomment the following code to have battery with gradient
+    
     CGRect coalRectangle = CGRectMake(currentPosition, top, currentCoalPercentage*width, height);
     currentPosition += currentCoalPercentage*width;
     CGContextAddRect(context, coalRectangle);
-    UIColor * darkGreyColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1.0];
-    UIColor * lightGreyColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+    UIColor * darkGreyColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.0];
+    UIColor * lightGreyColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
     drawLinearGradient(context, coalRectangle, lightGreyColor.CGColor, darkGreyColor.CGColor);
     
     CGRect oilRectangle = CGRectMake(currentPosition, top, currentOilPercentage*width, height);
     currentPosition += currentOilPercentage*width;
     CGContextAddRect(context, oilRectangle);
-    UIColor * darkOilColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.0];
-    UIColor * lightOilColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
-    drawLinearGradient(context, oilRectangle, lightOilColor.CGColor, darkOilColor.CGColor);
+    UIColor * darkOrangeColor = [UIColor colorWithRed:0.5 green:0.2 blue:0.1 alpha:1.0];
+    UIColor * lightOrangeColor = [UIColor colorWithRed:0.9 green:0.5 blue:0.0 alpha:1.0];
+    drawLinearGradient(context, oilRectangle, lightOrangeColor.CGColor, darkOrangeColor.CGColor);
     
     CGRect gasRectangle = CGRectMake(currentPosition, top, currentGasPercentage*width, height);
     currentPosition += currentGasPercentage*width;
     CGContextAddRect(context, gasRectangle);
-    UIColor * darkGasBlueColor = [UIColor colorWithRed:0.0 green:0.3 blue:0.5 alpha:1.0];
-    UIColor * lightGasBlueColor = [UIColor colorWithRed:0.0 green:0.7 blue:0.9 alpha:1.0];
-    drawLinearGradient(context, gasRectangle, lightGasBlueColor.CGColor, darkGasBlueColor.CGColor);
+    UIColor * darkRedColor = [UIColor colorWithRed:0.3 green:0.1 blue:0.0 alpha:1.0];
+    UIColor * lightRedColor = [UIColor colorWithRed:0.7 green:0.1 blue:0.0 alpha:1.0];
+    drawLinearGradient(context, gasRectangle, lightRedColor.CGColor, darkRedColor.CGColor);
     
     CGRect nuclearRectangle = CGRectMake(currentPosition, top, currentNuclearPercentage*width, height);
     currentPosition += currentNuclearPercentage*width;
     CGContextAddRect(context, nuclearRectangle);
-    UIColor * darkYellowColor = [UIColor colorWithRed:0.5 green:0.4 blue:0.0 alpha:1.0];
-    UIColor * lightYellowColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.0 alpha:1.0];
-    drawLinearGradient(context, nuclearRectangle, lightYellowColor.CGColor, darkYellowColor.CGColor);
+    UIColor * darkNuclearGreenColor = [UIColor colorWithRed:0.0 green:0.4 blue:0.0 alpha:1.0];
+    UIColor * lightNuclearGreenColor = [UIColor colorWithRed:0.0 green:0.8 blue:0.0 alpha:1.0];
+    drawLinearGradient(context, nuclearRectangle, lightNuclearGreenColor.CGColor, darkNuclearGreenColor.CGColor);
+    
+    CGRect otherFossilRectangle = CGRectMake(currentPosition, top, currentOtherFossilPercentage*width, height);
+    currentPosition += currentOtherFossilPercentage*width;
+    CGContextAddRect(context, otherFossilRectangle);
+    UIColor * darkPurpleColor = [UIColor colorWithRed:0.4 green:0.0 blue:0.4 alpha:1.0];
+    UIColor * lightPurpleColor = [UIColor colorWithRed:0.9 green:0.0 blue:0.9 alpha:1.0];
+    drawLinearGradient(context, otherFossilRectangle, lightPurpleColor.CGColor, darkPurpleColor.CGColor);
     
     CGRect hydroRectangle = CGRectMake(currentPosition, top, currentHydroPercentage*width, height);
     currentPosition += currentHydroPercentage*width;
@@ -127,13 +209,6 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
     UIColor * darkBlueColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.3 alpha:1.0];
     UIColor * lightBlueColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.7 alpha:1.0];
     drawLinearGradient(context, hydroRectangle, lightBlueColor.CGColor, darkBlueColor.CGColor);
-    
-    CGRect otherFossilRectangle = CGRectMake(currentPosition, top, currentOtherFossilPercentage*width, height);
-    currentPosition += currentOtherFossilPercentage*width;
-    CGContextAddRect(context, otherFossilRectangle);
-    UIColor * darkRedColor = [UIColor colorWithRed:0.9 green:0.2 blue:0.0 alpha:1.0];
-    UIColor * lightRedColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.0 alpha:1.0];
-    drawLinearGradient(context, otherFossilRectangle, lightRedColor.CGColor, darkRedColor.CGColor);
     
     CGRect geothermalRectangle = CGRectMake(currentPosition, top, currentGeothermalPercentage*width, height);
     currentPosition += currentGeothermalPercentage*width;
@@ -152,15 +227,15 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
     CGRect solarRectangle = CGRectMake(currentPosition, top, currentSolarPercentage*width, height);
     currentPosition += currentSolarPercentage*width;
     CGContextAddRect(context, solarRectangle);
-    UIColor * darkOrangeColor = [UIColor colorWithRed:0.5 green:0.2 blue:0.0 alpha:1.0];
-    UIColor * lightOrangeColor = [UIColor colorWithRed:1.0 green:0.5 blue:0.0 alpha:1.0];
-    drawLinearGradient(context, solarRectangle, lightOrangeColor.CGColor, darkOrangeColor.CGColor);
+    UIColor * darkYellowColor = [UIColor colorWithRed:0.5 green:0.4 blue:0.0 alpha:1.0];
+    UIColor * lightYellowColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.0 alpha:1.0];
+    drawLinearGradient(context, solarRectangle, lightYellowColor.CGColor, darkYellowColor.CGColor);
     
     CGRect biomassRectangle = CGRectMake(currentPosition, top, currentBiomassPercentage*width, height);
     currentPosition += currentBiomassPercentage*width;
     CGContextAddRect(context, biomassRectangle);
-    UIColor * darkBiomassColor = [UIColor colorWithRed:0.1 green:0.5 blue:0.0 alpha:1.0];
-    UIColor * lightBiomassColor = [UIColor colorWithRed:0.2 green:0.8 blue:0.0 alpha:1.0];
+    UIColor * darkBiomassColor = [UIColor colorWithRed:0.0 green:0.2 blue:0.0 alpha:1.0];
+    UIColor * lightBiomassColor = [UIColor colorWithRed:0.0 green:0.6 blue:0.0 alpha:1.0];
     drawLinearGradient(context, biomassRectangle, lightBiomassColor.CGColor, darkBiomassColor.CGColor);
     
     CGRect optOutRectangle = CGRectMake(currentPosition, top, currentOptOutPercentage*width, height);

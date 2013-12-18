@@ -18,4 +18,6 @@
 
 -(void) fillBattery;
 
+-(void) drawBattery;
+
 @end
