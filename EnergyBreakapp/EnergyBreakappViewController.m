@@ -15,7 +15,6 @@
 @implementation EnergyBreakappViewController
 @synthesize currentDistribution;
 @synthesize batteryView;
-@synthesize managedObjectContext;
 
 - (void)viewDidLoad
 {
@@ -54,7 +53,7 @@
                                                  name:UIDeviceBatteryStateDidChangeNotification
                                                object:nil];
     
-    isCharging = YES;
+    isCharging = NO;
     
     //Adding swipe gesture recognisers
     //The following code taken from http://www.altinkonline.nl/tutorials/xcode/gestures/swipe-gesture-for-ios-apps/
@@ -76,7 +75,10 @@
         isCharging = YES;
     }*/
     
+    locationManager.delegate = self;
     
+    //CHANGE THE ACCURACY!
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
     NSLog(@"View finished loading");
 }
@@ -101,7 +103,8 @@
     NSLog(@"Swiped left");
     if (currentDistribution != nil && [currentDistribution valueForKey:@"nextDistribution"] != nil) {
         currentDistribution = [currentDistribution valueForKey:@"nextDistribution"];
-        int zip = [[currentDistribution valueForKey:@"zip"] integerValue];
+        [self setDistributionDisplay:currentDistribution];
+        /*int zip = [[currentDistribution valueForKey:@"zip"] integerValue];
         distribution = [[EnergyDistribution alloc] initWithZipCode:zip];
         [self setPercentages];
         NSString *currentCity = [currentDistribution valueForKey:@"city"];
@@ -114,50 +117,88 @@
         _locationText.textAlignment = NSTextAlignmentCenter;
         NSString *cityAndState = [NSString stringWithFormat: @"%@, %@", currentCity, currentState];
         [_locationText setText:cityAndState];
-        [_dateText setText:formattedDateString];
+        [_dateText setText:formattedDateString];*/
     }
 }
 
 - (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
     NSLog(@"Swiped right");
-    if (currentDistribution != nil && [currentDistribution valueForKey:@"previousDistribution"] != nil) {
-        currentDistribution = [currentDistribution valueForKey:@"previousDistribution"];
-        int zip = [[currentDistribution valueForKey:@"zip"] integerValue];
-        NSLog(@"Zip coming out is %i", ([[currentDistribution valueForKey:@"zip"] integerValue]));
-        distribution = [[EnergyDistribution alloc] initWithZipCode:zip];
-        [self setPercentages];
-        NSString *currentCity = [currentDistribution valueForKey:@"city"];
-        NSString *currentState = [currentDistribution valueForKey:@"state"];
-        NSDate *currentDate = [currentDistribution valueForKey:@"date"];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        NSString *formattedDateString = [dateFormatter stringFromDate:currentDate];
-        NSString *cityAndState = [NSString stringWithFormat: @"%@, %@", currentCity, currentState];
-        _locationText.textAlignment = NSTextAlignmentCenter;
-        _dateText.textAlignment = NSTextAlignmentCenter;
-        [_locationText setText:cityAndState];
-        [_dateText setText:formattedDateString];
+    if (currentDistribution != nil) {
+        if ([currentDistribution valueForKey:@"previousDistribution"] != nil) {
+            currentDistribution = [currentDistribution valueForKey:@"previousDistribution"];
+            [self setDistributionDisplay:currentDistribution];
+            /*int zip = [[currentDistribution valueForKey:@"zip"] integerValue];
+            NSLog(@"Zip coming out is %i", ([[currentDistribution valueForKey:@"zip"] integerValue]));
+            distribution = [[EnergyDistribution alloc] initWithZipCode:zip];
+            [self setPercentages];
+            NSString *currentCity = [currentDistribution valueForKey:@"city"];
+            NSString *currentState = [currentDistribution valueForKey:@"state"];
+            NSDate *currentDate = [currentDistribution valueForKey:@"date"];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+            [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+            NSString *formattedDateString = [dateFormatter stringFromDate:currentDate];
+            NSString *cityAndState = [NSString stringWithFormat: @"%@, %@", currentCity, currentState];
+            _locationText.textAlignment = NSTextAlignmentCenter;
+            _dateText.textAlignment = NSTextAlignmentCenter;
+            [_locationText setText:cityAndState];
+            [_dateText setText:formattedDateString];*/
+        }
     }
+    else {
+        [self getUpdatedData];
+        currentDistribution = [fetchedObjects lastObject];
+        if ([currentDistribution valueForKey:@"city"]) {
+            [self setDistributionDisplay:currentDistribution];
+        }
+    }
+    
+    
+}
+
+- (void) setDistributionDisplay:(NSManagedObject*) savedDistribution {
+    int zip = [[savedDistribution valueForKey:@"zip"] integerValue];
+    NSLog(@"Zip coming out is %i", ([[savedDistribution valueForKey:@"zip"] integerValue]));
+    distribution = [[EnergyDistribution alloc] initWithZipCode:zip];
+    NSLog(@"Opt out percentage is %f", [distribution optOutPercentage]);
+    NSLog(@"Total percentage is %f", [distribution totalPercentages]);
+    [self setPercentages];
+    NSString *currentCity = [savedDistribution valueForKey:@"city"];
+    NSString *currentState = [savedDistribution valueForKey:@"state"];
+    NSDate *currentDate = [savedDistribution valueForKey:@"date"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSString *formattedDateString = [dateFormatter stringFromDate:currentDate];
+    NSString *cityAndState = [NSString stringWithFormat: @"%@, %@", currentCity, currentState];
+    _locationText.textAlignment = NSTextAlignmentCenter;
+    _dateText.textAlignment = NSTextAlignmentCenter;
+    [_locationText setText:cityAndState];
+    [_dateText setText:formattedDateString];
 }
 
 - (void)batteryStateDidChange:(NSNotification *)notification {
     if (([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateCharging)) {
+        isCharging = YES;
+        [self clearLocation];
         [locationManager startUpdatingLocation];
         _startDate = [NSDate date];
         _startChargePercentage = [[UIDevice currentDevice] batteryLevel];
-        isCharging = YES;
-        if (optOut) {
+        /*if (optOut) {
             NSLog(@"Device is charging in opt-out mode");
             distribution = [[EnergyDistribution alloc] initOptOutMode];
             [self setPercentages];
+            
+            [self getUpdatedData];
+            
+            [self saveDistribution: YES];
         }
         else{
             NSLog(@"Device is charging");
             locationManager.delegate = self;
             locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
             [locationManager startUpdatingLocation];
-        }
+        }*/
         //DON'T FORGET ABOUT OPT-OUT CHARGE!
         NSUserDefaults * standardUserDefaults = [NSUserDefaults standardUserDefaults];
         [standardUserDefaults setDouble:currentCoalPercentage forKey:@"currentCoal"];
@@ -174,9 +215,10 @@
         [chargingAlert show];
     }
     else if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
+        isCharging = NO;
+        [batteryView removeBattery];
         _endDate = [NSDate date];
         _endChargePercentage = [[UIDevice currentDevice] batteryLevel];
-        isCharging = NO;
         [_optOutButton setTitle:@"Opt out" forState:UIControlStateNormal];
         optOut = NO;
         _secondsSpentCharging = [_endDate timeIntervalSinceDate:_startDate];
@@ -207,50 +249,51 @@
 
 - (IBAction)updateLocation:(id)sender{
     NSLog(@"Update Location button pressed");
-    _locationText.text = @"";
-    _dateText.text = @"";
-    if (optOut)
+    [self clearLocation];
+    /*if (optOut)
     {
         distribution = [[EnergyDistribution alloc] initOptOutMode];
         [self setPercentages];
     }
     else if (isCharging)
     {
-        NSLog(@"Device is charging");
-        locationManager.delegate = self;
-        
-        //CHANGE THE ACCURACY!
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        
-        //CHANGE THE UPDATE FREQUENCY!
-        [locationManager startUpdatingLocation];
-    }
-    /*locationManager.delegate = self;
+     
+    }*/
+    NSLog(@"Device is charging");
     
-    //CHANGE THE ACCURACY!
-    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
     
     //CHANGE THE UPDATE FREQUENCY!
-    [locationManager startUpdatingLocation];*/
-    else{
-        NSLog(@"Device is not charging");
-    }
+    [locationManager startUpdatingLocation];
+}
+
+-(void) clearLocation
+{
+    _locationText.text = @"";
+    _dateText.text = @"";
 }
 
 
 /* Unclear event here - what if user presses opt out, plugs in, then presses opt out before unplugging? The opt out charge will not be recorded. Look into this. */
 
 - (IBAction)OptOut:(id)sender {
+    [self clearLocation];
     if (optOut) {
-        [locationManager startUpdatingLocation];
         optOut = NO;
+        if (isCharging) {
+            [locationManager startUpdatingLocation];
+        }
         NSLog(@"Opt in button pressed");
         [(UIButton *)sender setTitle:@"Opt out" forState:UIControlStateNormal];
     }
     else{
-        distribution = [[EnergyDistribution alloc] initOptOutMode];
-        [self setPercentages];
         optOut = YES;
+        if (isCharging) {
+            [locationManager startUpdatingLocation];
+        }
+        /*distribution = [[EnergyDistribution alloc] initOptOutMode];
+        [self setPercentages];
+        [self getUpdatedData];
+        [self saveDistribution: YES];*/
         NSLog(@"Opt out button pressed");
         [(UIButton *)sender setTitle:@"Opt in" forState:UIControlStateNormal];
     }
@@ -278,49 +321,73 @@
     [locationManager stopUpdatingLocation];
     
     NSLog(@"Reverse geocoding");
-    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (error == nil && [placemarks count] > 0){
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *geocodingError) {
+        if (geocodingError == nil && [placemarks count] > 0){
             placemark = [placemarks lastObject];
-            //_LocationText.text = [placemark postalCode];
-            distribution = [[EnergyDistribution alloc] initWithZipCode:[[placemark postalCode] intValue]];
+            if (optOut) {
+                distribution = [[EnergyDistribution alloc] initWithZipCode:0];
+            }
+            else{
+                distribution = [[EnergyDistribution alloc] initWithZipCode:[[placemark postalCode] intValue]];
+            }
             [self setPercentages];
-            NSManagedObjectContext *context;
-            EnergyBreakappAppDelegate *appDelegate = (EnergyBreakappAppDelegate*) [[UIApplication sharedApplication] delegate];
-            context = appDelegate.managedObjectContext;
             
+            [self getUpdatedData];
             
-            NSError *error;
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-            NSEntityDescription *entity = [NSEntityDescription
-                                           entityForName:@"EnergyDistribution" inManagedObjectContext:context];
-            [fetchRequest setEntity:entity];
-            NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-            
-            NSManagedObject *last = [fetchedObjects lastObject];
-            NSManagedObject *energyDistribution = [NSEntityDescription
-                                               insertNewObjectForEntityForName:@"EnergyDistribution"
-                                               inManagedObjectContext:context];
-            [energyDistribution setValue:[NSNumber numberWithInt:[[placemark postalCode] integerValue]] forKey:@"zip"];
-            NSLog(@"Zip put in is %@", [NSNumber numberWithInt:[[placemark postalCode] integerValue]]);
-            [energyDistribution setValue:[NSDate date] forKey:@"date"];
-            [energyDistribution setValue:[placemark locality] forKey:@"city"];
-            [energyDistribution setValue:[placemark administrativeArea] forKey:@"state"];
-            
-            if (last != nil) {
-                [energyDistribution setValue:last forKey:@"previousDistribution"];
-                [last setValue:energyDistribution forKey:@"nextDistribution"];
-            }
-            
-            currentDistribution = energyDistribution;
-            
-            if (![context save:&error]) {
-                NSLog(@"Couldn't save: %@", [error localizedDescription]);
-            }
+            [self saveDistribution: optOut];
         }        
         else{
             NSLog(@"Error!");
         }
     }];
+}
+
+-(void) getUpdatedData
+{
+    appDelegate = (EnergyBreakappAppDelegate*) [[UIApplication sharedApplication] delegate];
+    context = appDelegate.managedObjectContext;
+    
+    
+    NSError *error;
+    fetchRequest = [[NSFetchRequest alloc] init];
+    entity = [NSEntityDescription
+              entityForName:@"EnergyDistribution" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+}
+
+
+-(void) saveDistribution: (BOOL) isOptOut
+{
+    NSNumber* postalCode;
+    if (isOptOut) {
+        postalCode = 0;
+    }
+    else {
+        postalCode = [NSNumber numberWithInt:[[placemark postalCode] integerValue]];
+    }
+    NSError *error;
+    
+    NSManagedObject *last = [fetchedObjects lastObject];
+    NSManagedObject *energyDistribution = [NSEntityDescription
+                                           insertNewObjectForEntityForName:@"EnergyDistribution"
+                                           inManagedObjectContext:context];
+    [energyDistribution setValue:postalCode forKey:@"zip"];
+    NSLog(@"Zip put in is %@", postalCode);
+    [energyDistribution setValue:[NSDate date] forKey:@"date"];
+    [energyDistribution setValue:[placemark locality] forKey:@"city"];
+    [energyDistribution setValue:[placemark administrativeArea] forKey:@"state"];
+    
+    if (last != nil) {
+        [energyDistribution setValue:last forKey:@"previousDistribution"];
+        [last setValue:energyDistribution forKey:@"nextDistribution"];
+    }
+    
+    currentDistribution = energyDistribution;
+    
+    if (![context save:&error]) {
+        NSLog(@"Couldn't save: %@", [error localizedDescription]);
+    }
 }
 
 -(void) setPercentages

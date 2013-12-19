@@ -14,12 +14,13 @@
 
 -(id)initWithZipCode:(int)currentZipCode
 {
+    NSLog(@"Zip code inputted is %i", currentZipCode);
     self = [super init];
     if (self) {
         zipCode = currentZipCode;
-        [self setPercentages];
         otherFossilPercentage = 0.0;
         _optOutPercentage = 0.0;
+        [self setPercentages];
     }
     return self;
 }
@@ -46,8 +47,14 @@
 
 -(void)setPercentages
 {
+    //Opt out
+    if (zipCode == 0)
+    {
+        [self initOptOutMode];
+        NSLog(@"Opt out percentage is %f", _optOutPercentage);
+    }
     //AKGD
-    if ((zipCode >= 99501 && zipCode <= 99540) || (zipCode == 198) || (zipCode == 6)){
+    else if ((zipCode >= 99501 && zipCode <= 99540) || (zipCode == 198) || (zipCode == 6)){
         coalPercentage = 11.8133;
         oilPercentage = 13.6743;
         gasPercentage = 66.0333;

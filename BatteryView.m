@@ -87,6 +87,15 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
     CGColorSpaceRelease(colorSpace);
 }
 
+-(void) removeBattery
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGRect blackRectangle = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
+    CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
+    CGContextAddRect(context, blackRectangle);
+    CGContextFillRect(context, blackRectangle);
+}
+
 -(void) fillBattery
 {
     [self drawBattery];

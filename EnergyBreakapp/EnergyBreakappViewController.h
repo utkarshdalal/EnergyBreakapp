@@ -19,6 +19,11 @@
     CLLocationManager *locationManager;
     CLGeocoder *geocoder;
     CLPlacemark *placemark;
+    NSManagedObjectContext *context;
+    EnergyBreakappAppDelegate *appDelegate;
+    NSFetchRequest *fetchRequest;
+    NSEntityDescription *entity;
+    NSArray *fetchedObjects;
     BOOL isCharging;
     BOOL optOut;
     EnergyDistribution *distribution;
@@ -44,8 +49,10 @@
 - (IBAction)OptOut:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *optOutButton;
 @property (strong, nonatomic) IBOutlet BatteryView *batteryView;
-@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @property (weak, nonatomic) IBOutlet UITextView *locationText;
 @property (weak, nonatomic) IBOutlet UITextView *dateText;
+
+-(void) getUpdatedData;
+-(void) setDistributionDisplay: (NSManagedObject*) distribution;
 
 @end
