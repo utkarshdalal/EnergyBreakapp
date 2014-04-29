@@ -312,6 +312,8 @@
 {
     CLLocation *currentLocation = [locations lastObject];
     NSLog(@"Updated to location: %@", currentLocation);
+    distribution = [[EnergyDistribution alloc] initWithLatLon: currentLocation.coordinate.latitude :currentLocation.coordinate.longitude];
+    [self setPercentages];
     
     if (currentLocation != nil)
     {
@@ -320,7 +322,7 @@
     
     [locationManager stopUpdatingLocation];
     
-    NSLog(@"Reverse geocoding");
+    /*NSLog(@"Reverse geocoding");
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *geocodingError) {
         if (geocodingError == nil && [placemarks count] > 0){
             placemark = [placemarks lastObject];
@@ -339,7 +341,7 @@
         else{
             NSLog(@"Error!");
         }
-    }];
+    }];*/
 }
 
 -(void) getUpdatedData
@@ -399,6 +401,7 @@
     currentHydroPercentage = [distribution hydroPercentage];
     currentRenewablePercentage = [distribution renewablePercentage];
     currentOtherFossilPercentage = [distribution otherFossilPercentage];
+    NSLog(@"Other fossil percentage in view controller is %f", currentOtherFossilPercentage);
     currentGeothermalPercentage = [distribution geothermalPercentage];
     currentSolarPercentage = [distribution solarPercentage];
     currentWindPercentage = [distribution windPercentage];

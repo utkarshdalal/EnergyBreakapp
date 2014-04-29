@@ -12,6 +12,115 @@
 
 @synthesize coalPercentage, gasPercentage, oilPercentage, hydroPercentage, nuclearPercentage, renewablePercentage, otherFossilPercentage, biomassPercentage, windPercentage, solarPercentage, geothermalPercentage;
 
+-(id)initWithLatLon:(double)lat :(double)lon
+{
+    self = [super init];
+    otherFossilPercentage = 0.0;
+    coalPercentage = 0.0;
+    oilPercentage = 0.0;
+    gasPercentage = 0.0;
+    nuclearPercentage = 0.0;
+    hydroPercentage = 0.0;
+    renewablePercentage = 0.0;
+    biomassPercentage = 0.0;
+    windPercentage = 0.0;
+    solarPercentage = 0.0;
+    geothermalPercentage = 0.0;
+    _optOutPercentage = 0.0;
+    __block double coalGeneration = 0, oilGeneration = 0, gasGeneration = 0, nuclearGeneration = 0, hydroGeneration = 0, renewableGeneration = 0, otherFossilGeneration = 0, biomassGeneration = 0, windGeneration = 0, solarGeneration = 0, geothermalGeneration = 0, optOutGeneration = 0, totalGeneration = 0;
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *url = [NSString stringWithFormat: @"http://watttime-grid-api.herokuapp.com:80/api/v1/balancing_authorities/?loc=POINT(%f %f)", lon, lat];
+        url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"The URL is %@", url);
+        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        //NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://watttime-grid-api.herokuapp.com:80/api/v1/balancing_authorities/?loc=POINT%20(-72.519%2042.372)"]];
+        NSArray* json = nil;
+        if (data) {
+            json = [NSJSONSerialization
+                    JSONObjectWithData:data
+                    options:kNilOptions
+                    error:nil];
+        }
+        NSString *baAbbrev = [json[0] objectForKey:@"abbrev"];
+        
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSString *url2 = [NSString stringWithFormat: @"http://watttime-grid-api.herokuapp.com:80/api/v1/datapoints/?ba=%@", baAbbrev];
+            url2 = [url2 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSLog(@"The URL is %@", url2);
+            NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url2]];
+            NSDictionary* json = nil;
+            if (data) {
+                json = [NSJSONSerialization
+                        JSONObjectWithData:data
+                        options:kNilOptions
+                        error:nil];
+            }
+            NSArray *arrayOfFuels = json[@"results"][0][@"genmix"];
+            for (NSDictionary *dict in arrayOfFuels) {
+                NSString *fuelType = [dict objectForKey:@"fuel"];
+                NSLog(fuelType);
+                if ([fuelType  isEqual: @"biomass"]) {
+                    biomassGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += biomassGeneration;
+                }
+                else if ([fuelType  isEqual: @"coal"]) {
+                    coalGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += coalGeneration;
+                }
+                else if ([fuelType  isEqual: @"geo"]) {
+                    geothermalGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += geothermalGeneration;
+                }
+                else if ([fuelType  isEqual: @"hydro"]) {
+                    hydroGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += hydroGeneration;
+                }
+                else if ([fuelType  isEqual: @"natgas"]) {
+                    gasGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += gasGeneration;
+                }
+                else if ([fuelType  isEqual: @"nuclear"]) {
+                    nuclearGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += nuclearGeneration;
+                }
+                else if ([fuelType  isEqual: @"oil"]) {
+                    oilGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += oilGeneration;
+                }
+                else if ([fuelType  isEqual: @"solar"]) {
+                    solarGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += solarGeneration;
+                }
+                else if ([fuelType  isEqual: @"wind"]) {
+                    windGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += windGeneration;
+                }
+                //THIS IS NOT CORRECT! JUST FOR TESTING. OTHER = OTHER SOURCE, NOT OTHER FOSSIL.
+                else if ([fuelType  isEqual: @"other"]) {
+                    otherFossilGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += otherFossilGeneration;
+                }
+            }
+            
+        });
+        coalPercentage = coalGeneration/totalGeneration;
+        oilPercentage = oilGeneration/totalGeneration;
+        gasPercentage = gasGeneration/totalGeneration;
+        nuclearPercentage = nuclearGeneration/totalGeneration;
+        hydroPercentage = hydroGeneration/totalGeneration;
+        biomassPercentage = biomassGeneration/totalGeneration;
+        windPercentage = windGeneration/totalGeneration;
+        solarPercentage = solarGeneration/totalGeneration;
+        geothermalPercentage = geothermalGeneration/totalGeneration;
+        otherFossilPercentage = otherFossilGeneration/totalGeneration;
+        NSLog(@"wind percentage is %f", windPercentage);
+        NSLog(@"solar percentage is %f", solarPercentage);
+        NSLog(@"hydro percentage is %f", hydroPercentage);
+        NSLog(@"other percentage is %f", otherFossilPercentage);
+    });
+    return self;
+}
+
 -(id)initWithZipCode:(int)currentZipCode
 {
     NSLog(@"Zip code inputted is %i", currentZipCode);
@@ -532,7 +641,7 @@
 
 -(double)totalPercentages
 {
-    double total = coalPercentage + gasPercentage + oilPercentage + hydroPercentage + nuclearPercentage + renewablePercentage + otherFossilPercentage + _optOutPercentage;
+    double total = coalPercentage + gasPercentage + oilPercentage + hydroPercentage + nuclearPercentage + renewablePercentage + otherFossilPercentage + windPercentage + solarPercentage + _optOutPercentage + biomassPercentage + geothermalPercentage;
     return total;
 }
 

@@ -22,6 +22,7 @@
 
 -(void) setDistributionForCoal: (double) coalPercentage Oil: (double) oilPercentage Gas: (double) gasPercentage Nuclear: (double) nuclearPercentage Hydro: (double) hydroPercentage Renewable: (double) renewablePercentage OtherFossil: (double) otherFossilPercentage Geothermal: (double) geothermalPercentage Wind: (double) windPercentage Solar: (double) solarPercentage Biomass: (double) biomassPercentage OptOut: (double) optOutPercentage AndTotal: (double) totalPercentage
 {
+    NSLog(@"Other fossil is %f out of a total of %f", otherFossilPercentage, totalPercentage);
     currentCoalPercentage = coalPercentage/totalPercentage;
     currentOilPercentage = oilPercentage/totalPercentage;
     currentGasPercentage = gasPercentage/totalPercentage;
@@ -29,6 +30,7 @@
     currentHydroPercentage = hydroPercentage/totalPercentage;
     currentRenewablePercentage = renewablePercentage/totalPercentage;
     currentOtherFossilPercentage = otherFossilPercentage/totalPercentage;
+    NSLog(@"Other fossil percentage in Battery View setup is %f", currentOtherFossilPercentage);
     currentGeothermalPercentage = geothermalPercentage/totalPercentage;
     currentWindPercentage = windPercentage/totalPercentage;
     currentSolarPercentage = solarPercentage/totalPercentage;
@@ -106,6 +108,8 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 1.0);
     CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+    NSLog(@"start is %f", currentPosition);
+    NSLog(@"width is %f", width);
     
     //Uncomment the following code to have flat battery
     /*
@@ -204,13 +208,16 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
     UIColor * darkNuclearGreenColor = [UIColor colorWithRed:0.0 green:0.4 blue:0.0 alpha:1.0];
     UIColor * lightNuclearGreenColor = [UIColor colorWithRed:0.0 green:0.8 blue:0.0 alpha:1.0];
     drawLinearGradient(context, nuclearRectangle, lightNuclearGreenColor.CGColor, darkNuclearGreenColor.CGColor);
+    NSLog(@"Current position is %f", currentPosition);
     
+    NSLog(@"Other fossil percentage is %f", currentOtherFossilPercentage);
     CGRect otherFossilRectangle = CGRectMake(currentPosition, top, currentOtherFossilPercentage*width, height);
     currentPosition += currentOtherFossilPercentage*width;
     CGContextAddRect(context, otherFossilRectangle);
     UIColor * darkPurpleColor = [UIColor colorWithRed:0.4 green:0.0 blue:0.4 alpha:1.0];
     UIColor * lightPurpleColor = [UIColor colorWithRed:0.9 green:0.0 blue:0.9 alpha:1.0];
     drawLinearGradient(context, otherFossilRectangle, lightPurpleColor.CGColor, darkPurpleColor.CGColor);
+    NSLog(@"Current position is %f", currentPosition);
     
     CGRect hydroRectangle = CGRectMake(currentPosition, top, currentHydroPercentage*width, height);
     currentPosition += currentHydroPercentage*width;
@@ -232,13 +239,16 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
     UIColor * darkWindyColor = [UIColor colorWithRed:0.0 green:0.4 blue:0.4 alpha:1.0];
     UIColor * lightWindyColor = [UIColor colorWithRed:0.0 green:0.9 blue:0.9 alpha:1.0];
     drawLinearGradient(context, windRectangle, lightWindyColor.CGColor, darkWindyColor.CGColor);
+    NSLog(@"Current position is %f", currentPosition);
     
+    NSLog(@"Solar percentage is %f", currentSolarPercentage);
     CGRect solarRectangle = CGRectMake(currentPosition, top, currentSolarPercentage*width, height);
     currentPosition += currentSolarPercentage*width;
     CGContextAddRect(context, solarRectangle);
     UIColor * darkYellowColor = [UIColor colorWithRed:0.5 green:0.4 blue:0.0 alpha:1.0];
     UIColor * lightYellowColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.0 alpha:1.0];
     drawLinearGradient(context, solarRectangle, lightYellowColor.CGColor, darkYellowColor.CGColor);
+    NSLog(@"Current position is %f", currentPosition);
     
     CGRect biomassRectangle = CGRectMake(currentPosition, top, currentBiomassPercentage*width, height);
     currentPosition += currentBiomassPercentage*width;
