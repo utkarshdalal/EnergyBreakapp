@@ -33,7 +33,7 @@
     __block double coalGeneration = 0, oilGeneration = 0, gasGeneration = 0, nuclearGeneration = 0, hydroGeneration = 0, renewableGeneration = 0, otherFossilGeneration = 0, biomassGeneration = 0, windGeneration = 0, solarGeneration = 0, geothermalGeneration = 0, optOutGeneration = 0, totalGeneration = 0;
     
     //Making a synchronous request
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *url = [NSString stringWithFormat: @"http://watttime-grid-api.herokuapp.com:80/api/v1/balancing_authorities/?loc=POINT(%f %f)", lon, lat];
         url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"The URL is %@", url);
@@ -47,7 +47,7 @@
         }
         NSString *baAbbrev = [json[0] objectForKey:@"abbrev"];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSString *url2 = [NSString stringWithFormat: @"http://watttime-grid-api.herokuapp.com:80/api/v1/datapoints/?ba=%@", baAbbrev];
             url2 = [url2 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             NSLog(@"The URL is %@", url2);
