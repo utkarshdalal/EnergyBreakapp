@@ -12,6 +12,9 @@
 
 @synthesize coalPercentage, gasPercentage, oilPercentage, hydroPercentage, nuclearPercentage, renewablePercentage, otherFossilPercentage, biomassPercentage, windPercentage, solarPercentage, geothermalPercentage;
 
+
+/* Sets the values of the percentages of each energy source using latitude and longitude
+ and the WattTime API */
 -(id)initWithLatLon:(double)lat :(double)lon
 {
     self = [super init];
