@@ -23,6 +23,14 @@
     locationManager = [[CLLocationManager alloc] init];
     geocoder = [[CLGeocoder alloc] init];
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    /* Here the app first checks the stored data to see if the app has been used before.
+     It stores the total value of each energy source over the lifetime of the app and can be used
+     to display the user's total consumption of each kind of fuel. The total is updated in
+     BatteryStateDidChange below, when the phone is unplugged. Since the app currently cannot detect
+     if the phone is unplugged unless the app is in the background, this currently does nothing.
+     However, if desired, the same code could be used for the same purpose elsewhere. */
+    
     if (![standardUserDefaults objectForKey:@"totalPercentage"]) {
         totalCoalPercentage = 0.0;
         totalGasPercentage = 0.0;
@@ -55,7 +63,15 @@
     
     isCharging = NO;
     
-    //Adding swipe gesture recognisers
+    /*Adding swipe gesture recognisers. If the user swipes right, it shows her previous energy mix.
+     If she swipes left (after swiping right) it shows her next one
+     THIS CURRENTLY DOES NOT WORK BECAUSE IT IS USING THE OLD MODEL IN WHICH ONLY THE ZIP CODE OF
+     EACH DISTRIBUTION WAS RECORDED. TO MAKE THIS WORK, EnergyBreakapp.xcdatamodel WILL NEED TO BE
+     MODIFIED SO THAT EACH ENERGY DISTRIBUTION CONTAINS AN EnergyDistribution.
+     Uncomment the following code to have left and right swiping gestures recognised */
+    
+    
+    /*
     //The following code taken from http://www.altinkonline.nl/tutorials/xcode/gestures/swipe-gesture-for-ios-apps/
     UISwipeGestureRecognizer *oneFingerSwipeLeft = [[UISwipeGestureRecognizer alloc]
                                                      initWithTarget:self
@@ -68,6 +84,7 @@
                                                       action:@selector(oneFingerSwipeRight:)];
     [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [[self view] addGestureRecognizer:oneFingerSwipeRight];
+     */
     
     //Uncomment the following lines and delete the one before this comment when you want the phone to check if it is charging before updating the location.
     /*if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateCharging)
@@ -156,6 +173,10 @@
     
 }
 
+
+/*To have the gesture swiping recognised, after modifying the model and adding the EnergyDistribution (as mentioned in viewDidLoad), set distribution to the saved EnergyDistribution and then call [self setPercentages], then uncomment the following code*/
+
+/*
 - (void) setDistributionDisplay:(NSManagedObject*) savedDistribution {
     int zip = [[savedDistribution valueForKey:@"zip"] integerValue];
     NSLog(@"Zip coming out is %i", ([[savedDistribution valueForKey:@"zip"] integerValue]));
@@ -176,6 +197,7 @@
     [_locationText setText:cityAndState];
     [_dateText setText:formattedDateString];
 }
+*/
 
 - (void)batteryStateDidChange:(NSNotification *)notification {
     if (([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateCharging)) {
@@ -400,14 +422,15 @@
     currentNuclearPercentage = [distribution nuclearPercentage];
     currentHydroPercentage = [distribution hydroPercentage];
     currentRenewablePercentage = [distribution renewablePercentage];
-    currentOtherFossilPercentage = [distribution otherFossilPercentage];
-    NSLog(@"Other fossil percentage in view controller is %f", currentOtherFossilPercentage);
+    currentOtherPercentage = [distribution otherPercentage];
+    NSLog(@"Other percentage in view controller is %f", currentOtherPercentage);
     currentGeothermalPercentage = [distribution geothermalPercentage];
     currentSolarPercentage = [distribution solarPercentage];
     currentWindPercentage = [distribution windPercentage];
     currentBiomassPercentage = [distribution biomassPercentage];
+    currentBiogasPercentage = [distribution biogasPercentage];
     currentOptOutPercentage = [distribution optOutPercentage];
     currentTotalPercentage = [distribution totalPercentages];
-    [batteryView setDistributionForCoal:currentCoalPercentage Oil:currentOilPercentage Gas:currentGasPercentage Nuclear:currentNuclearPercentage Hydro:currentHydroPercentage Renewable:currentRenewablePercentage OtherFossil:currentOtherFossilPercentage Geothermal:currentGeothermalPercentage Wind:currentWindPercentage Solar:currentSolarPercentage Biomass:currentBiomassPercentage OptOut:currentOptOutPercentage AndTotal:currentTotalPercentage];
+    [batteryView setDistributionForCoal:currentCoalPercentage Oil:currentOilPercentage Gas:currentGasPercentage Nuclear:currentNuclearPercentage Hydro:currentHydroPercentage Renewable:currentRenewablePercentage Other:currentOtherPercentage Geothermal:currentGeothermalPercentage Wind:currentWindPercentage Solar:currentSolarPercentage Biomass:currentBiomassPercentage Biogas:currentBiogasPercentage OptOut:currentOptOutPercentage AndTotal:currentTotalPercentage];
 }
 @end

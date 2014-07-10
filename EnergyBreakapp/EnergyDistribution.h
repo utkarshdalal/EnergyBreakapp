@@ -13,7 +13,7 @@
     int zipCode;
 }
 
-@property double coalPercentage, oilPercentage, gasPercentage, nuclearPercentage, hydroPercentage, renewablePercentage, otherFossilPercentage, biomassPercentage, windPercentage, solarPercentage, geothermalPercentage, optOutPercentage;
+@property double coalPercentage, oilPercentage, gasPercentage, nuclearPercentage, hydroPercentage, renewablePercentage, otherPercentage, biomassPercentage, biogasPercentage, windPercentage, solarPercentage, geothermalPercentage, optOutPercentage;
 @property (nonatomic, strong) NSMutableData *responseData;
 
 -(id) initWithLatLon:(double) lat :(double) lon;

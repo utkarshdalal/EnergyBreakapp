@@ -28,8 +28,8 @@
     BOOL optOut;
     EnergyDistribution *distribution;
     double startCharge;
-    double currentCoalPercentage, currentOilPercentage, currentGasPercentage, currentNuclearPercentage, currentHydroPercentage, currentRenewablePercentage, currentOtherFossilPercentage, currentGeothermalPercentage, currentWindPercentage, currentSolarPercentage, currentBiomassPercentage, currentOptOutPercentage, currentTotalPercentage;
-    double totalCoalPercentage, totalOilPercentage, totalGasPercentage, totalNuclearPercentage, totalHydroPercentage, totalRenewablePercentage, totalOtherFossilPercentage, totalGeothermalPercentage, totalWindPercentage, totalSolarPercentage, totalBiomassPercentage, totalOptOutPercentage, totalPercentage;
+    double currentCoalPercentage, currentOilPercentage, currentGasPercentage, currentNuclearPercentage, currentHydroPercentage, currentRenewablePercentage, currentOtherPercentage, currentGeothermalPercentage, currentWindPercentage, currentSolarPercentage, currentBiomassPercentage, currentBiogasPercentage, currentOptOutPercentage, currentTotalPercentage;
+    double totalCoalPercentage, totalOilPercentage, totalGasPercentage, totalNuclearPercentage, totalHydroPercentage, totalRenewablePercentage, totalOtherFossilPercentage, totalGeothermalPercentage, totalWindPercentage, totalSolarPercentage, totalBiomassPercentage, totalBiogasPercentage, totalOptOutPercentage, totalPercentage;
 }
 /*@property (weak, nonatomic) IBOutlet UITextView *LocationText;
 @property (weak, nonatomic) IBOutlet UITextView *CoalText;

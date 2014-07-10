@@ -10,7 +10,7 @@
 
 @implementation EnergyDistribution
 
-@synthesize coalPercentage, gasPercentage, oilPercentage, hydroPercentage, nuclearPercentage, renewablePercentage, otherFossilPercentage, biomassPercentage, windPercentage, solarPercentage, geothermalPercentage;
+@synthesize coalPercentage, gasPercentage, oilPercentage, hydroPercentage, nuclearPercentage, renewablePercentage, otherPercentage, biomassPercentage, biogasPercentage, windPercentage, solarPercentage, geothermalPercentage;
 
 
 /* Sets the values of the percentages of each energy source using latitude and longitude
@@ -18,7 +18,7 @@
 -(id)initWithLatLon:(double)lat :(double)lon
 {
     self = [super init];
-    otherFossilPercentage = 0.0;
+    otherPercentage = 0.0;
     coalPercentage = 0.0;
     oilPercentage = 0.0;
     gasPercentage = 0.0;
@@ -29,10 +29,17 @@
     windPercentage = 0.0;
     solarPercentage = 0.0;
     geothermalPercentage = 0.0;
+    biogasPercentage = 0.0;
     _optOutPercentage = 0.0;
-    __block double coalGeneration = 0, oilGeneration = 0, gasGeneration = 0, nuclearGeneration = 0, hydroGeneration = 0, renewableGeneration = 0, otherFossilGeneration = 0, biomassGeneration = 0, windGeneration = 0, solarGeneration = 0, geothermalGeneration = 0, optOutGeneration = 0, totalGeneration = 0;
+    __block double coalGeneration = 0, oilGeneration = 0, gasGeneration = 0, nuclearGeneration = 0, hydroGeneration = 0, renewableGeneration = 0, otherGeneration = 0, biomassGeneration = 0, biogasGeneration = 0, windGeneration = 0, solarGeneration = 0, geothermalGeneration = 0, optOutGeneration = 0, totalGeneration = 0;
     
-    //Making a synchronous request
+    /* Making a synchronous request to first get the correct balancing authority,
+     then to find the energy mix for that authority.
+     This code currently does not use an API authentication token, but this will need to be added
+     to make more than 25 requests/hour to the API. Instructions on how to use the token can be
+     found after registering at:
+     http://watttime-grid-api.herokuapp.com/accounts/register/*/
+     
     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *url = [NSString stringWithFormat: @"http://watttime-grid-api.herokuapp.com:80/api/v1/balancing_authorities/?loc=POINT(%f %f)", lon, lat];
         url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -67,6 +74,20 @@
                     biomassGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
                     totalGeneration += biomassGeneration;
                 }
+                /*We are currently not displaying the contribution of biogas. Uncomment the code below
+                 to add biogas to the total fuel generation.
+                 To display it, edit fillBattery in BatteryView.m to additionally fill in the battery
+                 for biogas.
+                 Don't forget to additionally change to storyboard so that the key contains the colour
+                 and corresponding label for biogas.*/
+                
+                /*
+                else if ([fuelType  isEqual: @"biogas"]){
+                    biogasGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += biogasGeneration;
+                }
+                */
+                
                 else if ([fuelType  isEqual: @"coal"]) {
                     coalGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
                     totalGeneration += coalGeneration;
@@ -99,10 +120,9 @@
                     windGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
                     totalGeneration += windGeneration;
                 }
-                //THIS IS NOT CORRECT! JUST FOR TESTING. OTHER = OTHER SOURCE, NOT OTHER FOSSIL.
                 else if ([fuelType  isEqual: @"other"]) {
-                    otherFossilGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
-                    totalGeneration += otherFossilGeneration;
+                    otherGeneration = [[dict objectForKey:@"gen_MW"] doubleValue];
+                    totalGeneration += otherGeneration;
                 }
             }
             
@@ -113,14 +133,15 @@
         nuclearPercentage = nuclearGeneration/totalGeneration;
         hydroPercentage = hydroGeneration/totalGeneration;
         biomassPercentage = biomassGeneration/totalGeneration;
+        biogasPercentage = biogasGeneration/totalGeneration;
         windPercentage = windGeneration/totalGeneration;
         solarPercentage = solarGeneration/totalGeneration;
         geothermalPercentage = geothermalGeneration/totalGeneration;
-        otherFossilPercentage = otherFossilGeneration/totalGeneration;
+        otherPercentage = otherGeneration/totalGeneration;
         NSLog(@"wind percentage is %f", windPercentage);
         NSLog(@"solar percentage is %f", solarPercentage);
         NSLog(@"hydro percentage is %f", hydroPercentage);
-        NSLog(@"other percentage is %f", otherFossilPercentage);
+        NSLog(@"other percentage is %f", otherPercentage);
     });
     return self;
 }
@@ -131,7 +152,7 @@
     self = [super init];
     if (self) {
         zipCode = currentZipCode;
-        otherFossilPercentage = 0.0;
+        otherPercentage = 0.0;
         _optOutPercentage = 0.0;
         [self setPercentages];
     }
@@ -142,7 +163,7 @@
 {
     self = [super init];
     if (self) {
-        otherFossilPercentage = 0.0;
+        otherPercentage = 0.0;
         coalPercentage = 0.0;
         oilPercentage = 0.0;
         gasPercentage = 0.0;
@@ -295,7 +316,7 @@
         nuclearPercentage = 0.0;
         hydroPercentage = 3.7312;
         renewablePercentage = 17.2729;
-        otherFossilPercentage = 7.1345;
+        otherPercentage = 7.1345;
         biomassPercentage = 3.3481;
         windPercentage = 8.3278;
         solarPercentage = 0.0460;
@@ -310,7 +331,7 @@
         nuclearPercentage = 0.0;
         hydroPercentage = 0.0;
         renewablePercentage = 2.1615;
-        otherFossilPercentage = 2.2104;
+        otherPercentage = 2.2104;
         biomassPercentage = 2.1615;
         windPercentage = 0.0;
         solarPercentage = 0.0;
@@ -645,7 +666,7 @@
 
 -(double)totalPercentages
 {
-    double total = coalPercentage + gasPercentage + oilPercentage + hydroPercentage + nuclearPercentage + renewablePercentage + otherFossilPercentage + windPercentage + solarPercentage + _optOutPercentage + biomassPercentage + geothermalPercentage;
+    double total = coalPercentage + gasPercentage + oilPercentage + hydroPercentage + nuclearPercentage + renewablePercentage + otherPercentage + windPercentage + solarPercentage + _optOutPercentage + biomassPercentage + geothermalPercentage;
     return total;
 }
 
